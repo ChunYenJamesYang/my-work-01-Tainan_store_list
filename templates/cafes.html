@@ -1,0 +1,61 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Restaurants{% endblock %}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet"
+          href="{{url_for('.static', filename='css/styles.css')}}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h1>😻 早午餐、咖啡店、甜點 😻</h1>
+
+	  <table class="table">
+          <!-- This is where you will write the code to render a Bootstrap 
+          Table that contains all the information from the 
+          cafe-data.csv file. -->
+
+              {% for items in cafes %}
+                <tr>
+                    {% for item in items %}
+                        {% if item.find("http") != -1 %}
+                            <td><a target=”_blank” href={{ item }}>Link</a></td>
+                        {% else %}
+                            {% if items.index(item) == 0 and cafes.index(items) != 0 %}
+                            <td>
+                                {% if current_user.id == 1 %}
+                                <a href="{{ url_for('delete_query', cafe_title=item) }}">❌ </a>
+                                {% endif %}
+                                <a href="{{ url_for('edit_cafe', cafe_title=item) }}">{{ item }}</a>
+                            </td>
+                            {% else %}
+                            <td>{{ item }}</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+              {% endfor %}
+
+  	  </table>
+
+        {% if current_user.id == 1 %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('add_cafe') }}" role="button">Add!</a>
+        {% endif %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('home') }}" role="button">Return to index page</a>
+        {% if logged_in %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('logout') }}" role="button">Logout</a>
+        {% endif %}
+
+<!--      <p><a href={{ url_for("home") }}>Return to index page</a></p>-->
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
