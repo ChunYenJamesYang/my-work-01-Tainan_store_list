@@ -182,26 +182,26 @@ db.create_all()
 #     visited="Visited",
 # )
 
-# title = Cafe (
-#     cafe="店名",
-#     location="地區",
-#     maps_url="地圖",
-#     website="網站",
-#     rest="公休日",
-#     openhours="營業時間",
-#     timelimit="限時",
-#     wifi="WiFi",
-#     table="工作桌",
-#     toilet="廁所",
-#     seats="座位",
-#     meal="餐點",
-#     visited="吃過",
-#     recommend="推薦程度",
-#     comment="心得",
-# )
-#
-# db.session.add(title)
-# db.session.commit()
+title = Cafe (
+    cafe="店名",
+    location="地區",
+    maps_url="地圖",
+    website="網站",
+    rest="公休日",
+    openhours="營業時間",
+    timelimit="限時",
+    wifi="WiFi",
+    table="工作桌",
+    toilet="廁所",
+    seats="座位",
+    meal="餐點",
+    visited="吃過",
+    recommend="推薦程度",
+    comment="心得",
+)
+
+db.session.add(title)
+db.session.commit()
 
 
 # user = User (
