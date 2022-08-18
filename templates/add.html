@@ -16,13 +16,12 @@
 
       <h2>✍️ 新增店家至清單 ✍️</h2>
 
-        {{ wtf.quick_form(form, novalidate=True) }}
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
 
       <!-- This is where your WTForm will go -->
 
-<!--	  <p class="space-above"><a href="{{ url_for('cafes') }}">See all cafes</a></p>-->
         <h1></h1>
-        <a class="btn btn-warning btn-lg" href="{{ url_for('cafes') }}" role="button">See all cafes</a>
+        <a class="btn btn-warning btn-md" href="{{ url_for('stores', db_name=db_name) }}" role="button">回到店家清單</a>
 
     </div>
   </div>

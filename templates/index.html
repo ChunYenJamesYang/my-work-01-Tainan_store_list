@@ -12,18 +12,21 @@
 {% block content %}
 <div class="jumbotron text-center">
     <div class="container">
-  <h1 class="display-4">☕ Tainan's Brunch, Coffee, Dessert 🍰</h1>
-  <p class="lead">走一趟台南的早午餐，品嚐一份回味無窮的甜點嗎？</p>
+  <h1 class="display-4">🍜 Tainan's Food 🍰</h1>
+  <p class="lead">走一趟台南，品嚐一份回味無窮的美食嗎？</p>
   <hr class="my-4">
   <p>一起跟我巡禮台南的美味店家，跟我一起悠閒待一下午，或有美食相伴著工作</p>
 <!--        <p>You've found the right place! Checkout my collection of cafes with data on power socket availability, wifi speed and coffee quality.</p>-->
   {% if not logged_in %}
-  <a class="btn btn-warning btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
+  <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">登入</a>
   {% endif %}
-  <a class="btn btn-warning btn-lg" href="{{ url_for('cafes') }}" role="button">Show Me Cafes!</a>
-        {% if logged_in %}
-        <a class="btn btn-warning btn-lg" href="{{ url_for('logout') }}" role="button">Logout</a>
-        {% endif %}
+  <a class="btn btn-warning btn-lg" href="{{ url_for('stores', db_name='Cafe') }}" role="button">早午餐、咖啡、甜點</a>
+  <a class="btn btn-danger btn-lg" href="{{ url_for('stores', db_name='StreetfoodStore') }}" role="button">小吃、餐廳</a>
+  <a class="btn btn-info btn-lg" href="{{ url_for('stores', db_name='IceStore') }}" role="button">冰品、飲料</a>
+  <a class="btn btn-success btn-lg" href="{{ url_for('stores', db_name='BreakfastStore') }}" role="button">早點、點心、夜點</a>
+  {% if logged_in %}
+  <a class="btn btn-primary btn-lg" href="{{ url_for('logout') }}" role="button">登出</a>
+  {% endif %}
 </div>
     </div>
 

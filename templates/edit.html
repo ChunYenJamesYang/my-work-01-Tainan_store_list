@@ -1,6 +1,6 @@
 {% extends 'bootstrap/base.html' %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title %}Edit Cafe's Information{% endblock %}
+{% block title %}Edit Store's Information{% endblock %}
 
 {% block styles %}
     {{super()}}
@@ -14,13 +14,14 @@
   <div class="row">
     <div class="col-sm-12 col-md-8">
 
-      <h1>✍️ 更新店家資訊 ✍️</h1>
+      <h2>✍️ 更新店家資訊 ✍️</h2>
 
-        {{ wtf.quick_form(form, novalidate=True) }}
+        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
 
       <!-- This is where your WTForm will go -->
 
-	  <p class="space-above"><a href="{{ url_for('cafes') }}">See all cafes</a></p>
+        <h1></h1>
+        <a class="btn btn-warning btn-md" href="{{ url_for('stores', db_name=db_name) }}" role="button">回到店家清單</a>
 
     </div>
   </div>

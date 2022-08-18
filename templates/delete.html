@@ -22,8 +22,8 @@
       <!-- This is where your WTForm will go -->
 
 
-        <a class="btn btn-warning btn-md" href="{{ url_for('delete_cafe', cafe_title=cafe) }}" role="button">Yes</a>
-        <a class="btn btn-warning btn-lg" href="{{ url_for('cafes') }}" role="button">No</a>
+        <a class="btn btn-warning btn-md" href="{{ url_for('delete_cafe', cafe_title=cafe, db_name=db_name) }}" role="button">確定</a>
+        <a class="btn btn-warning btn-lg" href="{{ url_for('stores', db_name=db_name) }}" role="button">取消</a>
 
     </div>
   </div>

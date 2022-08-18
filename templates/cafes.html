@@ -14,7 +14,15 @@
   <div class="row">
     <div class="col-sm-12">
 
-      <h1>😻 早午餐、咖啡店、甜點 😻</h1>
+      {% if db_name == "Cafe" %}
+        <h2>😻 早午餐、咖啡、甜點 😻</h2>
+      {% elif db_name == "StreetfoodStore" %}
+        <h2>😻 小吃、餐廳 😻</h2>
+      {% elif db_name == "IceStore" %}
+        <h2>😻 冰品、飲料 😻</h2>
+      {% elif db_name == "BreakfastStore" %}
+        <h2>😻 早點、點心、夜點 😻</h2>
+      {% endif %}
 
 	  <table class="table">
           <!-- This is where you will write the code to render a Bootstrap 
@@ -30,10 +38,10 @@
                             {% if items.index(item) == 0 and cafes.index(items) != 0 %}
                             <td>
                                 {% if current_user.id == 1 %}
-                                <a href="{{ url_for('delete_query', cafe_title=item) }}">❌ </a>
+                                <a href="{{ url_for('delete_query', cafe_title=item, db_name=db_name) }}">❌ </a>
                                 {% endif %}
                                 {% if current_user.id == 1 %}
-                                <a href="{{ url_for('edit_cafe', cafe_title=item) }}">{{ item }}</a>
+                                <a href="{{ url_for('edit_cafe', cafe_title=item, db_name=db_name) }}">{{ item }}</a>
                                 {% else %}
                                 {{ item }}
                                 {% endif %}
@@ -49,11 +57,19 @@
   	  </table>
 
         {% if current_user.id == 1 %}
-        <a class="btn btn-warning btn-lg" href="{{ url_for('add_cafe') }}" role="button">Add!</a>
+        <a class="btn btn-danger btn-lg" href="{{ url_for('add_stores', db_name=db_name) }}" role="button">新增店家</a>
+        {% else %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('stores', db_name='Cafe') }}" role="button">早午餐、咖啡、甜點</a>
+        <a class="btn btn-danger btn-lg" href="{{ url_for('stores', db_name='StreetfoodStore') }}" role="button">小吃、餐廳</a>
+        <a class="btn btn-info btn-lg" href="{{ url_for('stores', db_name='IceStore') }}" role="button">冰品、飲料</a>
+        <a class="btn btn-success btn-lg" href="{{ url_for('stores', db_name='BreakfastStore') }}" role="button">早點、點心、夜點</a>
         {% endif %}
-        <a class="btn btn-warning btn-lg" href="{{ url_for('home') }}" role="button">Return to index page</a>
+
         {% if logged_in %}
-        <a class="btn btn-warning btn-lg" href="{{ url_for('logout') }}" role="button">Logout</a>
+        <a class="btn btn-warning btn-lg" href="{{ url_for('home') }}" role="button">回到首頁</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('logout') }}" role="button">登出</a>
+        {% else %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('home') }}" role="button">回到首頁</a>
         {% endif %}
 
 <!--      <p><a href={{ url_for("home") }}>Return to index page</a></p>-->
