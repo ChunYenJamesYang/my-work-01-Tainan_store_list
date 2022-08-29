@@ -475,7 +475,7 @@ def delete_query(db_name, cafe_title):
     return render_template('delete.html', cafe=cafe_to_delete.cafe, db_name=db_name)
 
 @app.route('/delete/<db_name>/<cafe_title>')
-def delete_cafe(cafe_title):
+def delete_cafe(db_name, cafe_title):
     # cafe_to_delete = Cafe.query.filter_by(cafe=cafe_title).first()
     if db_name == "Cafe":
         cafe_to_delete = Cafe.query.filter_by(cafe=cafe_title).first()

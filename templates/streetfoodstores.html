@@ -1,0 +1,66 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}Restaurants{% endblock %}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet"
+          href="{{url_for('.static', filename='css/styles.css')}}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h2>😻 小吃、餐廳 😻</h2>
+
+	  <table class="table">
+          <!-- This is where you will write the code to render a Bootstrap
+          Table that contains all the information from the
+          cafe-data.csv file. -->
+
+              {% for items in cafes %}
+                <tr>
+                    {% for item in items %}
+                        {% if item.find("http") != -1 %}
+                            <td><a target=”_blank” href={{ item }}>Link</a></td>
+                        {% else %}
+                            {% if items.index(item) == 0 and cafes.index(items) != 0 %}
+                            <td>
+                                {% if current_user.id == 1 %}
+                                <a href="{{ url_for('delete_query', cafe_title=item) }}">❌ </a>
+                                {% endif %}
+                                {% if current_user.id == 1 %}
+                                <a href="{{ url_for('edit_cafe', cafe_title=item) }}">{{ item }}</a>
+                                {% else %}
+                                {{ item }}
+                                {% endif %}
+                            </td>
+                            {% else %}
+                            <td>{{ item }}</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+              {% endfor %}
+
+  	  </table>
+
+        {% if current_user.id == 1 %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('add_streetfood') }}" role="button">Add!</a>
+        {% endif %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('home') }}" role="button">Return to index page</a>
+        <a class="btn btn-warning btn-lg" href="{{ url_for('cafes') }}" role="button">Go to cafes page</a>
+        {% if logged_in %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('logout') }}" role="button">Logout</a>
+        {% endif %}
+
+<!--      <p><a href={{ url_for("home") }}>Return to index page</a></p>-->
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
