@@ -575,8 +575,9 @@ def add_stats(db_name):
 
 # -------- delete tables -------- #
 
-@app.route('/delete_query/<db_name>/<cafe_title>')
-def delete_query(db_name, cafe_title):
+@app.route('/delete_query/<db_name>')
+def delete_query(db_name):
+    cafe_title = request.args["cafe_title"]
     if db_name == "Cafe":
         cafe_to_delete = Cafe.query.filter_by(cafe=cafe_title).first()
     elif db_name == "StreetfoodStore":
@@ -587,9 +588,10 @@ def delete_query(db_name, cafe_title):
         cafe_to_delete = BreakfastStore.query.filter_by(cafe=cafe_title).first()
     return render_template('delete.html', cafe=cafe_to_delete.cafe, db_name=db_name, db_group="stores")
 
-@app.route('/delete/<db_name>/<cafe_title>')
-def delete_cafe(db_name, cafe_title):
+@app.route('/delete/<db_name>')
+def delete_cafe(db_name):
     # cafe_to_delete = Cafe.query.filter_by(cafe=cafe_title).first()
+    cafe_title = request.args["cafe_title"]
     if db_name == "Cafe":
         cafe_to_delete = Cafe.query.filter_by(cafe=cafe_title).first()
     elif db_name == "StreetfoodStore":
@@ -603,8 +605,9 @@ def delete_cafe(db_name, cafe_title):
 
     return redirect(url_for("stores", db_name=db_name))
 
-@app.route('/delete_stats_query/<db_name>/<item>')
-def delete_stats_query(db_name, item):
+@app.route('/delete_stats_query/<db_name>')
+def delete_stats_query(db_name):
+    item = request.args["item"]
     if db_name == "Cafe":
         item_to_delete = CafeStats.query.filter_by(item=item).first()
     elif db_name == "StreetfoodStore":
@@ -615,8 +618,9 @@ def delete_stats_query(db_name, item):
         item_to_delete = BreakfastStats.query.filter_by(item=item).first()
     return render_template('delete.html', cafe=item_to_delete.item, db_name=db_name, db_group="stats")
 
-@app.route('/delete_stats/<db_name>/<item>')
-def delete_stats(db_name, item):
+@app.route('/delete_stats/<db_name>')
+def delete_stats(db_name):
+    item = request.args["item"
     if db_name == "Cafe":
         item_to_delete = CafeStats.query.filter_by(item=item).first()
     elif db_name == "StreetfoodStore":

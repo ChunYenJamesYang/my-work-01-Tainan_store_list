@@ -35,7 +35,7 @@
             {% for items in stats %}
                 <tr>
                     {% for item in items %}
-                        {% if items.index(item) != 0 and if item.find("http") != -1 %}
+                        {% if items.index(item) != 0 and item.find("http") != -1 %}
                             <td><a target=”_blank” href={{ item }}>Link</a></td>
                         {% else %}
                             {% if items.index(item) == 0 and stats.index(items) != 0 %}
@@ -70,24 +70,26 @@
               {% for items in cafes %}
                 <tr>
                     {% for item in items %}
-                        {% if items.index(item) != 0 and if item.find("http") != -1 %}
-                            <td><a target=”_blank” href={{ item }}>Link</a></td>
-                        {% else %}
                             {% if items.index(item) == 0 and cafes.index(items) != 0 %}
                             <td>
                                 {% if current_user.id == 1 %}
                                 <a href="{{ url_for('delete_query', cafe_title=item, db_name=db_name) }}">❌ </a>
                                 {% endif %}
                                 {% if current_user.id == 1 %}
+                                {% if item.find("http") != -1 %}
+                                Shouldn't be a link.
+                                {% else %}
                                 <a href="{{ url_for('edit_cafe', cafe_title=item, db_name=db_name) }}">{{ item }}</a>
+                                {% endif %}
                                 {% else %}
                                 {{ item }}
                                 {% endif %}
                             </td>
+                            {% elif item.find("http") != -1 %}
+                            <td><a target=”_blank” href={{ item }}>Link</a></td>
                             {% else %}
                             <td>{{ item }}</td>
                             {% endif %}
-                        {% endif %}
                     {% endfor %}
                 </tr>
               {% endfor %}
