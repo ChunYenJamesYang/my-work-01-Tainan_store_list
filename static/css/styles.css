@@ -23,3 +23,19 @@ a {
     margin-top: 20px;
     padding-top: 20px;
 }
+
+hr {
+
+border: none;
+border-top: dotted;
+/* border-top: dashed; */
+/* border-top-color: #68A7AD; */
+border-top-color: #4682B4;
+border-width: 2px;
+
+width: 100%;
+}
+
+h4 {
+    color: #87CEEB;
+}

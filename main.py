@@ -181,14 +181,52 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(1000))
     password = db.Column(db.String(100))
 
+# Stats db
+#   Cafe
+class CafeStats(db.Model):
+    __tablename__ = "cafestats"
+
+    id = db.Column(db.Integer, primary_key=True)
+    # email = db.Column(db.String(100), unique=True)
+    item = db.Column(db.String(1000))
+    link = db.Column(db.String(1000))
+
+
+#   StreetfoodStore
+class StreetfoodStats(db.Model):
+    __tablename__ = "streetfoodstats"
+
+    id = db.Column(db.Integer, primary_key=True)
+    # email = db.Column(db.String(100), unique=True)
+    item = db.Column(db.String(1000))
+    link = db.Column(db.String(1000))
+
+
+#   IceStore
+class IceStats(db.Model):
+    __tablename__ = "icestats"
+
+    id = db.Column(db.Integer, primary_key=True)
+    # email = db.Column(db.String(100), unique=True)
+    item = db.Column(db.String(1000))
+    link = db.Column(db.String(1000))
+
+#   BreakfastStore
+class BreakfastStats(db.Model):
+    __tablename__ = "breakfaststats"
+
+    id = db.Column(db.Integer, primary_key=True)
+    # email = db.Column(db.String(100), unique=True)
+    item = db.Column(db.String(1000))
+    link = db.Column(db.String(1000))
 
 
 # HTLM Form classes
 class CafeForm(FlaskForm):
     cafe = StringField('店名', validators=[DataRequired()])
     location = SelectField('地區', choices=[(zone, zone) for zone in TAINAIN_ZONES.split("\n")])
-    maps_url = StringField('Google Maps(URL) 地圖', validators=[URL()])
-    website = StringField('店家網站、FB、IG擇一(URL)', validators=[URL()])
+    maps_url = StringField('Google Maps(URL) 地圖', validators=[DataRequired()])
+    website = StringField('店家網站、FB、IG擇一(URL)', validators=[DataRequired()])
     rest = StringField('公休日 e. g. 三、四', validators=[DataRequired()])
     openhours = StringField('營業時間 e.g. 11:30–18:00', validators=[DataRequired()])
     timelimit = SelectField('是否限時', choices=[('v', '有限時'), (' ', '不限時或不確定')])
@@ -215,14 +253,14 @@ class CafeForm(FlaskForm):
     # seats = StringField('Seats Number', validators=[DataRequired()])
     # visited = StringField('Visited', validators=[DataRequired()])
 
-    submit = SubmitField('Submit')
+    submit = SubmitField('送出表單')
 
 # Street Food/Ice Store Form classes
 class StoreForm(FlaskForm):
     cafe = StringField('店名', validators=[DataRequired()])
     location = SelectField('地區', choices=[(zone, zone) for zone in TAINAIN_ZONES.split("\n")])
-    maps_url = StringField('Google Maps(URL) 地圖', validators=[URL()])
-    website = StringField('店家網站、FB、IG擇一(URL)', validators=[URL()])
+    maps_url = StringField('Google Maps(URL) 地圖', validators=[DataRequired()])
+    website = StringField('店家網站、FB、IG擇一(URL)', validators=[DataRequired()])
     rest = StringField('公休日 e. g. 三、四', validators=[DataRequired()])
     openhours = StringField('營業時間 e.g. 11:30–18:00', validators=[DataRequired()])
     # timelimit = SelectField('是否限時', choices=[('v', '有限時'), (' ', '不限時或不確定')])
@@ -236,14 +274,14 @@ class StoreForm(FlaskForm):
         ("??️", "沒吃過"), ("❤️", "❤ 不推薦"), ("❤️❤️️", "❤❤ 普通"), ("❤️❤️❤️️", "❤❤❤ 中上"), ("❤️❤️❤️❤️", "❤❤❤❤ 不錯"), ("❤️❤️❤️❤️❤️", "❤❤❤❤❤ 推薦")])
     comment = StringField('心得', validators=[DataRequired()])
 
-    submit = SubmitField('Submit')
+    submit = SubmitField('送出表單')
 
 # Breakfast Store Form classes
 class BreakfastForm(FlaskForm):
     cafe = StringField('店名', validators=[DataRequired()])
     location = SelectField('地區', choices=[(zone, zone) for zone in TAINAIN_ZONES.split("\n")])
-    maps_url = StringField('Google Maps(URL) 地圖', validators=[URL()])
-    website = StringField('店家網站、FB、IG擇一(URL)', validators=[URL()])
+    maps_url = StringField('Google Maps(URL) 地圖', validators=[DataRequired()])
+    website = StringField('店家網站、FB、IG擇一(URL)', validators=[DataRequired()])
     rest = StringField('公休日 e. g. 三、四', validators=[DataRequired()])
     openhours = StringField('營業時間 e.g. 11:30–18:00', validators=[DataRequired()])
     # timelimit = SelectField('是否限時', choices=[('v', '有限時'), (' ', '不限時或不確定')])
@@ -257,8 +295,7 @@ class BreakfastForm(FlaskForm):
         ("??️", "沒吃過"), ("❤️", "❤ 不推薦"), ("❤️❤️️", "❤❤ 普通"), ("❤️❤️❤️️", "❤❤❤ 中上"), ("❤️❤️❤️❤️", "❤❤❤❤ 不錯"), ("❤️❤️❤️❤️❤️", "❤❤❤❤❤ 推薦")])
     comment = StringField('心得', validators=[DataRequired()])
 
-    submit = SubmitField('Submit')
-
+    submit = SubmitField('送出表單')
 
 
 # User Login Form
@@ -266,6 +303,14 @@ class LoginForm(FlaskForm):
     name = StringField("Username", validators=[DataRequired()])
     password = StringField("Password", validators=[DataRequired()])
     submit = SubmitField("確定登入")
+
+
+# Stats Form classes
+class StatsForm(FlaskForm):
+    item = StringField('項目', validators=[DataRequired()])
+    link = StringField('連結或心得', validators=[DataRequired()])
+
+    submit = SubmitField("送出表單")
 
 
 # Exercise:
@@ -326,6 +371,38 @@ db.create_all()
 # db.session.add(user)
 # db.session.commit()
 
+# stats = CafeStats (
+#     item="項目",
+#     link="連結或心得"
+# )
+#
+# db.session.add(stats)
+# db.session.commit()
+#
+# stats = IceStats (
+#     item="項目",
+#     link="連結或心得"
+# )
+#
+# db.session.add(stats)
+# db.session.commit()
+#
+# stats = BreakfastStats (
+#     item="項目",
+#     link="連結或心得"
+# )
+#
+# db.session.add(stats)
+# db.session.commit()
+#
+# stats = StreetfoodStats (
+#     item="項目",
+#     link="連結或心得"
+# )
+#
+# db.session.add(stats)
+# db.session.commit()
+
 # variables
 
 # all Flask routes below
@@ -360,7 +437,7 @@ def add_stores(db_name):
             add_breakfast(form=form)
         return redirect(url_for("stores", db_name=db_name))
 
-    return render_template('add.html', form=form, db_name=db_name)
+    return render_template('add.html', form=form, db_name=db_name, db_group="stores")
 
 def add_cafe(form):
     # add new cafe
@@ -460,6 +537,42 @@ def add_breakfast(form):
     db.session.add(new_cafe)
     db.session.commit()
 
+# add stats
+@app.route('/add-stats/<db_name>', methods=["GET", "POST"])
+def add_stats(db_name):
+
+    # create form
+    form = StatsForm()
+
+    # detect submit button clicked
+    if form.validate_on_submit():
+        if db_name == "Cafe":
+            new_stats = CafeStats (
+                item=form.item.data,
+                link=form.link.data,
+            )
+        elif db_name == "StreetfoodStore":
+            new_stats = StreetfoodStats(
+                item=form.item.data,
+                link=form.link.data,
+            )
+        elif db_name == "IceStore":
+            new_stats = IceStats(
+                item=form.item.data,
+                link=form.link.data,
+            )
+        elif db_name == "BreakfastStore":
+            new_stats = BreakfastStats(
+                item=form.item.data,
+                link=form.link.data,
+            )
+        # add new stats
+        db.session.add(new_stats)
+        db.session.commit()
+        return redirect(url_for("stores", db_name=db_name))
+
+    return render_template('add.html', form=form, db_name=db_name, db_group="stats")
+
 # -------- delete tables -------- #
 
 @app.route('/delete_query/<db_name>/<cafe_title>')
@@ -472,7 +585,7 @@ def delete_query(db_name, cafe_title):
         cafe_to_delete = IceStore.query.filter_by(cafe=cafe_title).first()
     elif db_name == "BreakfastStore":
         cafe_to_delete = BreakfastStore.query.filter_by(cafe=cafe_title).first()
-    return render_template('delete.html', cafe=cafe_to_delete.cafe, db_name=db_name)
+    return render_template('delete.html', cafe=cafe_to_delete.cafe, db_name=db_name, db_group="stores")
 
 @app.route('/delete/<db_name>/<cafe_title>')
 def delete_cafe(db_name, cafe_title):
@@ -490,7 +603,64 @@ def delete_cafe(db_name, cafe_title):
 
     return redirect(url_for("stores", db_name=db_name))
 
+@app.route('/delete_stats_query/<db_name>/<item>')
+def delete_stats_query(db_name, item):
+    if db_name == "Cafe":
+        item_to_delete = CafeStats.query.filter_by(item=item).first()
+    elif db_name == "StreetfoodStore":
+        item_to_delete = StreetfoodStats.query.filter_by(item=item).first()
+    elif db_name == "IceStore":
+        item_to_delete = IceStats.query.filter_by(item=item).first()
+    elif db_name == "BreakfastStore":
+        item_to_delete = BreakfastStats.query.filter_by(item=item).first()
+    return render_template('delete.html', cafe=item_to_delete.item, db_name=db_name, db_group="stats")
+
+@app.route('/delete_stats/<db_name>/<item>')
+def delete_stats(db_name, item):
+    if db_name == "Cafe":
+        item_to_delete = CafeStats.query.filter_by(item=item).first()
+    elif db_name == "StreetfoodStore":
+        item_to_delete = StreetfoodStats.query.filter_by(item=item).first()
+    elif db_name == "IceStore":
+        item_to_delete = IceStats.query.filter_by(item=item).first()
+    elif db_name == "BreakfastStore":
+        item_to_delete = BreakfastStats.query.filter_by(item=item).first()
+    db.session.delete(item_to_delete)
+    db.session.commit()
+
+    return redirect(url_for("stores", db_name=db_name))
+
 # -------- edit tables -------- #
+
+@app.route('/edit-stats/<db_name>/<item>', methods=["GET", "POST"])
+def edit_stats(db_name, item):
+    if db_name == "Cafe":
+        stats = CafeStats.query.filter_by(item=item).first()
+    elif db_name == "StreetfoodStore":
+        stats = StreetfoodStats.query.filter_by(item=item).first()
+    elif db_name == "IceStore":
+        stats = IceStats.query.filter_by(item=item).first()
+    elif db_name == "BreakfastStore":
+        stats = BreakfastStats.query.filter_by(item=item).first()
+    # create form
+    form = StatsForm()
+
+    # initialize form default value
+    form.item.data = stats.item
+    form.link.data = stats.link
+
+    # detect the submit buttons clicked
+    if form.validate_on_submit():
+        # add new cafe
+        stats.item = request.form["item"]
+        stats.link = request.form["link"]
+
+        # update db
+        db.session.commit()
+        return redirect(url_for("stores", db_name=db_name))
+
+    return render_template('edit.html', form=form, db_name=db_name)
+
 
 @app.route('/edit-cafe/<db_name>/<cafe_title>', methods=["GET", "POST"])
 def edit_cafe(db_name, cafe_title):
@@ -560,6 +730,22 @@ def edit_cafe(db_name, cafe_title):
 
 # -------- show tables -------- #
 
+# get stats table
+def get_stats_table(db_class, db_name):
+    """Get stats tables based on the input format"""
+
+    list_of_stats = []
+    title = db_class.query.get(1)
+    all_stats = [
+        cafe for cafe in db_class.query.all() if cafe.id != 1
+    ]
+
+    for item in [title]+all_stats:
+        items = [item.item, item.link]
+        list_of_stats.append(items)
+
+    return list_of_stats
+
 def get_tables(db_class, db_name):
     """Get tables based on the input format"""
 
@@ -570,6 +756,10 @@ def get_tables(db_class, db_name):
     all_cafes = [
         cafe for cafe in ordered_db_class if cafe.id != 1
     ]
+
+    total_stores = len(all_cafes)
+    visited_stores = len(db.session.query(db_class).filter_by(visited="v").all())
+    to_visit_stores = total_stores - visited_stores
 
     # loop through all db and save in list_of_rows
     for cafe in [title]+all_cafes:
@@ -600,22 +790,35 @@ def get_tables(db_class, db_name):
         ]
         list_of_rows.append(items)
 
-    return list_of_rows
+    return list_of_rows, total_stores, visited_stores, to_visit_stores
 
 @app.route('/<db_name>/stores')
 def stores(db_name):
 
     if db_name == "Cafe":
-        list_of_rows = get_tables(Cafe, db_name)
+        list_of_stats = get_stats_table(CafeStats, db_name)
+        list_of_rows, total_stores, visited_stores, to_visit_stores = get_tables(Cafe, db_name)
     elif db_name == "StreetfoodStore":
-        list_of_rows = get_tables(StreetfoodStore, db_name)
+        list_of_stats = get_stats_table(StreetfoodStats, db_name)
+        list_of_rows, total_stores, visited_stores, to_visit_stores = get_tables(StreetfoodStore, db_name)
     elif db_name == "IceStore":
-        list_of_rows = get_tables(IceStore, db_name)
+        list_of_stats = get_stats_table(IceStats, db_name)
+        list_of_rows, total_stores, visited_stores, to_visit_stores = get_tables(IceStore, db_name)
     elif db_name == "BreakfastStore":
-        list_of_rows = get_tables(BreakfastStore, db_name)
+        list_of_stats = get_stats_table(BreakfastStats, db_name)
+        list_of_rows, total_stores, visited_stores, to_visit_stores = get_tables(BreakfastStore, db_name)
 
     # reusable
-    return render_template('cafes.html', db_name=db_name, cafes=list_of_rows, logged_in=current_user.is_authenticated)
+    return render_template(
+        'cafes.html',
+        db_name=db_name,
+        cafes=list_of_rows,
+        stats=list_of_stats,
+        logged_in=current_user.is_authenticated,
+        total_stores=total_stores,
+        visited_stores=visited_stores,
+        to_visit_stores=to_visit_stores
+    )
 
 # # @app.route('/cafes')
 # def cafes():

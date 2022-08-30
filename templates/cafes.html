@@ -24,10 +24,48 @@
         <h2>😻 早點、點心、夜點 😻</h2>
       {% endif %}
 
-	  <table class="table">
+
+       <br>
+       <h4>綜合評比</h4>
+       <table class="table">
           <!-- This is where you will write the code to render a Bootstrap 
           Table that contains all the information from the 
           cafe-data.csv file. -->
+
+            {% for items in stats %}
+                <tr>
+                    {% for item in items %}
+                        {% if item.find("http") != -1 %}
+                            <td><a target=”_blank” href={{ item }}>Link</a></td>
+                        {% else %}
+                            {% if items.index(item) == 0 and stats.index(items) != 0 %}
+                            <td>
+                                {% if current_user.id == 1 %}
+                                <a href="{{ url_for('delete_stats_query', item=item, db_name=db_name) }}">❌ </a>
+                                {% endif %}
+                                {% if current_user.id == 1 %}
+                                <a href="{{ url_for('edit_stats', item=item, db_name=db_name) }}">{{ item }}</a>
+                                {% else %}
+                                {{ item }}
+                                {% endif %}
+                            </td>
+                            {% else %}
+                            <td>{{ item }}</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+              {% endfor %}
+
+        </table>
+
+        <hr>
+        <br>
+
+        <h4>店家清單: 造訪過{{ visited_stores }}家，口袋裡{{ to_visit_stores }}家，總共{{ total_stores }}家</h4>
+        <table class="table">
+
+
 
               {% for items in cafes %}
                 <tr>
@@ -56,7 +94,10 @@
 
   	  </table>
 
+        <hr>
+
         {% if current_user.id == 1 %}
+        <a class="btn btn-danger btn-lg" href="{{ url_for('add_stats', db_name=db_name) }}" role="button">新增評比</a>
         <a class="btn btn-danger btn-lg" href="{{ url_for('add_stores', db_name=db_name) }}" role="button">新增店家</a>
         {% else %}
         <a class="btn btn-warning btn-lg" href="{{ url_for('stores', db_name='Cafe') }}" role="button">早午餐、咖啡、甜點</a>

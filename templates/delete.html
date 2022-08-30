@@ -22,7 +22,11 @@
       <!-- This is where your WTForm will go -->
 
 
+        {% if db_group == "stats" %}
+        <a class="btn btn-warning btn-md" href="{{ url_for('delete_stats', item=cafe, db_name=db_name) }}" role="button">確定</a>
+        {% else %}
         <a class="btn btn-warning btn-md" href="{{ url_for('delete_cafe', cafe_title=cafe, db_name=db_name) }}" role="button">確定</a>
+        {% endif %}
         <a class="btn btn-warning btn-lg" href="{{ url_for('stores', db_name=db_name) }}" role="button">取消</a>
 
     </div>
