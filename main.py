@@ -620,7 +620,7 @@ def delete_stats_query(db_name):
 
 @app.route('/delete_stats/<db_name>')
 def delete_stats(db_name):
-    item = request.args["item"
+    item = request.args["item"]
     if db_name == "Cafe":
         item_to_delete = CafeStats.query.filter_by(item=item).first()
     elif db_name == "StreetfoodStore":
