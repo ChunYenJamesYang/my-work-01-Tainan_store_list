@@ -35,7 +35,7 @@
             {% for items in stats %}
                 <tr>
                     {% for item in items %}
-                        {% if item.find("http") != -1 %}
+                        {% if items.index(item) != 0 and if item.find("http") != -1 %}
                             <td><a target=”_blank” href={{ item }}>Link</a></td>
                         {% else %}
                             {% if items.index(item) == 0 and stats.index(items) != 0 %}
@@ -70,7 +70,7 @@
               {% for items in cafes %}
                 <tr>
                     {% for item in items %}
-                        {% if item.find("http") != -1 %}
+                        {% if items.index(item) != 0 and if item.find("http") != -1 %}
                             <td><a target=”_blank” href={{ item }}>Link</a></td>
                         {% else %}
                             {% if items.index(item) == 0 and cafes.index(items) != 0 %}
