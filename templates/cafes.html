@@ -26,6 +26,23 @@
 
 
        <br>
+        {% if current_user.id == 1 %}
+        <a class="btn btn-danger btn-lg" href="{{ url_for('add_stats', db_name=db_name) }}" role="button">新增評比</a>
+        <a class="btn btn-danger btn-lg" href="{{ url_for('add_stores', db_name=db_name) }}" role="button">新增店家</a>
+        {% else %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('stores', db_name='Cafe') }}" role="button">早午餐、咖啡、甜點</a>
+        <a class="btn btn-danger btn-lg" href="{{ url_for('stores', db_name='StreetfoodStore') }}" role="button">小吃、餐廳</a>
+        <a class="btn btn-info btn-lg" href="{{ url_for('stores', db_name='IceStore') }}" role="button">冰品、飲料</a>
+        <a class="btn btn-success btn-lg" href="{{ url_for('stores', db_name='BreakfastStore') }}" role="button">早點、點心、夜點</a>
+        {% endif %}
+
+        {% if logged_in %}
+        <a class="btn btn-warning btn-lg" href="{{ url_for('home') }}" role="button">回到首頁</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('logout') }}" role="button">登出</a>
+        {% else %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('home') }}" role="button">回到首頁</a>
+        {% endif %}
+        <hr>
        <h4>綜合評比</h4>
        <table class="table">
           <!-- This is where you will write the code to render a Bootstrap 
@@ -98,22 +115,7 @@
 
         <hr>
 
-        {% if current_user.id == 1 %}
-        <a class="btn btn-danger btn-lg" href="{{ url_for('add_stats', db_name=db_name) }}" role="button">新增評比</a>
-        <a class="btn btn-danger btn-lg" href="{{ url_for('add_stores', db_name=db_name) }}" role="button">新增店家</a>
-        {% else %}
-        <a class="btn btn-warning btn-lg" href="{{ url_for('stores', db_name='Cafe') }}" role="button">早午餐、咖啡、甜點</a>
-        <a class="btn btn-danger btn-lg" href="{{ url_for('stores', db_name='StreetfoodStore') }}" role="button">小吃、餐廳</a>
-        <a class="btn btn-info btn-lg" href="{{ url_for('stores', db_name='IceStore') }}" role="button">冰品、飲料</a>
-        <a class="btn btn-success btn-lg" href="{{ url_for('stores', db_name='BreakfastStore') }}" role="button">早點、點心、夜點</a>
-        {% endif %}
 
-        {% if logged_in %}
-        <a class="btn btn-warning btn-lg" href="{{ url_for('home') }}" role="button">回到首頁</a>
-        <a class="btn btn-primary btn-lg" href="{{ url_for('logout') }}" role="button">登出</a>
-        {% else %}
-        <a class="btn btn-primary btn-lg" href="{{ url_for('home') }}" role="button">回到首頁</a>
-        {% endif %}
 
 <!--      <p><a href={{ url_for("home") }}>Return to index page</a></p>-->
 
